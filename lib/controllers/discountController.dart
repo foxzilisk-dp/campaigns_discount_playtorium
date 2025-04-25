@@ -56,7 +56,7 @@ class DiscountController extends GetxController {
           double categoryDiscount = 0.0;
           for (var item in cartItems) {
             if (item.category == campaign.category) {
-              categoryDiscount = categoryDiscount +
+              categoryDiscount +=
                   (item.price * (campaign.percentage ?? 0.0)) / 100;
             }
           }
@@ -64,10 +64,24 @@ class DiscountController extends GetxController {
               total - categoryDiscount; // Full equation for category discount
         }
       }
+
+      // Apply Seasonal discount with thresholdAmount and thresholdDiscount
+      for (var seasonal in campaigns
+          .where((campaign) => campaign.type == CampaignType.seasonal)) {
+        // Check if seasonal campaign has thresholdAmount and thresholdDiscount
+        if (seasonal.thresholdAmount != null &&
+            seasonal.thresholdDiscount != null) {
+          // Check if the total meets the thresholdAmount to apply discount
+          if (total >= seasonal.thresholdAmount!) {
+            total -=
+                seasonal.thresholdDiscount!; // Subtract the seasonal discount
+          }
+        }
+      }
     }
 
-    // Set the discounted price
-    discountedPrice.value = total;
+    // Set the discounted price (ensuring it's not negative)
+    discountedPrice.value = total.clamp(0, double.infinity);
   }
 
   // Validate if the selected campaign can be applied
@@ -99,15 +113,20 @@ class DiscountController extends GetxController {
       }
     }
 
+    if (campaign.type == CampaignType.seasonal) {
+      if (campaign.thresholdAmount == null ||
+          campaign.thresholdDiscount == null) {
+        return false; // Seasonal campaign must have valid thresholdAmount and thresholdDiscount
+      }
+    }
+
     return true; // Campaign is valid
   }
 
   // Reset the selections and clear calculations
   void reset() {
-    selectedCampaign.value = null;
-    cartItems.clear();
-    campaigns.clear();
-    totalPrice.value = 0.0;
-    discountedPrice.value = 0.0;
+    selectedCampaign.value = null; // Reset selected campaign
+    totalPrice.value = 0.0; // Reset total price
+    discountedPrice.value = 0.0; // Reset discounted price
   }
 }
