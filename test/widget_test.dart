@@ -1,30 +1,36 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
+import 'package:campaigns_discount_playtorium/models/campaignTypes.dart';
+import 'package:campaigns_discount_playtorium/models/cartItems.dart';
+import 'package:campaigns_discount_playtorium/services/calculateDiscount.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:campaigns_discount_playtorium/main.dart';
-
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  final items = [
+    CartItem(name: 'เสื้อ', price: 350, category: 'Clothing'),
+    CartItem(name: 'หมวก', price: 250, category: 'Accessories'),
+  ];
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  test('Fixed amount coupon applies correctly', () {
+    final campaigns = [
+      Campaign(type: CampaignType.coupon, subType: 'fixed', amount: 100)
+    ];
+    final price =
+        CalculateDiscountService().calculateTotalPrice(items, campaigns);
+    expect(price, 500);
+  });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+  test('Points discount capped at 20%', () {
+    final campaigns = [
+      Campaign(type: CampaignType.onTop, subType: 'points', points: 500)
+    ];
+    final price =
+        CalculateDiscountService().calculateTotalPrice(items, campaigns);
+    expect(price, closeTo(480, 0.01)); // 600 - max 20% = 480
+  });
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  test('Invalid campaign type returns full price', () {
+    final campaigns = [Campaign(type: CampaignType.coupon, subType: 'unknown')];
+    final price =
+        CalculateDiscountService().calculateTotalPrice(items, campaigns);
+    expect(price, 600); // no discount applied
   });
 }
