@@ -1,32 +1,18 @@
-// Enum representing main types of discount campaigns
+// Enum to define the types of campaigns (Coupon, OnTop, Seasonal)
 enum CampaignType { coupon, onTop, seasonal }
 
+// This class represents a campaign with its parameters
 class Campaign {
-  // The main type; coupon, onTop, or seasonal
-  final CampaignType type;
+  final CampaignType type; // Type of the campaign (Coupon, OnTop, Seasonal)
+  final String subType; // Subtype of the campaign (e.g., fixed, percentage)
+  final double? amount; // Amount for fixed discount
+  final double? percentage; // Percentage for discount
+  final int? points; // Points for discount (for OnTop campaigns)
+  final String? category; // Category for discounts (for OnTop campaigns)
+  final double? thresholdAmount; // Threshold amount for seasonal campaigns
+  final double? thresholdDiscount; // Discount amount for seasonal campaigns
 
-  // The subtype of the campaign; 'fixed', 'percentage', 'points'
-  final String subType;
-
-  // A fixed amount discount (50 THB off the total cart)
-  final double? amount;
-
-  // A percentage discount (10% off)
-  final double? percentage;
-
-  // Number of points the user wants to use (1 point = 1 THB)
-  final int? points;
-
-  // The category the discount applies to (used in OnTop category discounts)
-  final String? category;
-
-  // For seasonal discounts: threshold amount to qualify for a discount step (every 300 THB)
-  final double? thresholdAmount;
-
-  // For seasonal discounts: discount applied for each threshold reached (40 THB off per 300 THB)
-  final double? discountPerThreshold;
-
-  // Constructor to initialize the campaign type
+  // Constructor to create a Campaign
   Campaign({
     required this.type,
     required this.subType,
@@ -35,6 +21,6 @@ class Campaign {
     this.points,
     this.category,
     this.thresholdAmount,
-    this.discountPerThreshold,
+    this.thresholdDiscount,
   });
 }
