@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'discount_screen.dart';
+import 'screens/discountScreen.dart';
 
 void main() => runApp(const MyApp());
 
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: Color.fromARGB(255, 207, 10, 10),
         ),
       ),
-      home: const DiscountScreen(),
+      home: DiscountScreen(),
     );
   }
 }
