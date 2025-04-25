@@ -106,7 +106,7 @@ class DiscountScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text(
+                  const Text(
                     'Cart Items:',
                     textAlign: TextAlign.start,
                     style: TextStyle(
@@ -120,10 +120,10 @@ class DiscountScreen extends StatelessWidget {
                         final item = controller.cartItems[index];
                         return ListTile(
                           title: Text(item.name,
-                              style: TextStyle(color: Colors.white)),
+                              style: const TextStyle(color: Colors.white)),
                           subtitle: Text(
                             '${item.price} THB (${item.category})',
-                            style: TextStyle(color: Colors.white70),
+                            style: const TextStyle(color: Colors.white70),
                           ),
                         );
                       },
@@ -132,7 +132,7 @@ class DiscountScreen extends StatelessWidget {
                   const SizedBox(height: 10),
                   // Dropdown to select campaign
                   Obx(() => DropdownButton<Campaign>(
-                        hint: Text(
+                        hint: const Text(
                           'Select a campaign',
                           style: TextStyle(color: Colors.white),
                         ),
@@ -153,7 +153,7 @@ class DiscountScreen extends StatelessWidget {
                             child: Text(
                               campaign.subType,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(color: Colors.white),
+                              style: const TextStyle(color: Colors.white),
                             ),
                           );
                         }).toList(),
