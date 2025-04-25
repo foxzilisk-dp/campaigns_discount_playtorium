@@ -79,13 +79,12 @@ class CalculateDiscountService {
     final seasonal = selectedCampaigns[CampaignType.seasonal];
     if (seasonal != null &&
         seasonal.thresholdAmount != null &&
-        seasonal.discountPerThreshold != null) {
+        seasonal.thresholdDiscount != null) {
       // Calculate how many times the threshold is exceeded based on the total price
       int times = (total / seasonal.thresholdAmount!).floor();
       // Apply the discount for each threshold crossed
       total = total -
-          (times *
-              seasonal.discountPerThreshold!); // Subtract seasonal discount
+          (times * seasonal.thresholdDiscount!); // Subtract seasonal discount
     }
 
     return total.clamp(

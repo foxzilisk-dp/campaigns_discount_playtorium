@@ -4,7 +4,7 @@ enum CampaignType { coupon, onTop, seasonal }
 // This class represents a campaign with its parameters
 class Campaign {
   final CampaignType type; // Type of the campaign (Coupon, OnTop, Seasonal)
-  final String subType; // Subtype of the campaign (e.g., fixed, percentage)
+  final String subType; // Subtype of the campaign (fixed, percentage)
   final double? amount; // Amount for fixed discount
   final double? percentage; // Percentage for discount
   final int? points; // Points for discount (for OnTop campaigns)
