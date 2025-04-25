@@ -1,7 +1,7 @@
 import '../models/campaignTypes.dart';
 import '../models/cartItems.dart';
 
-class DiscountService {
+class CalculateDiscountService {
   /// This method calculates the total price after applying the discounts.
   ///
   /// [items] - List of items in the cart with a price and category.

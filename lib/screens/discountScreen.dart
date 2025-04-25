@@ -3,14 +3,14 @@ import '../models/cartItems.dart';
 import '../models/campaignTypes.dart';
 
 class DiscountScreen extends StatelessWidget {
-  /// List of cart items
+  // List of cart items
   final List<CartItem> items = [
     CartItem(name: 'T-Shirt', price: 350, category: 'Clothing'),
     CartItem(name: 'Hat', price: 250, category: 'Accessories'),
     CartItem(name: 'Belt', price: 230, category: 'Accessories'),
   ];
 
-  /// Sample campaigns discounts
+  // Sample campaigns discounts
   final List<Campaign> campaigns = [
     Campaign(type: CampaignType.coupon, subType: 'fixed', amount: 50),
     Campaign(type: CampaignType.onTop, subType: 'points', points: 68),
@@ -18,7 +18,7 @@ class DiscountScreen extends StatelessWidget {
       type: CampaignType.seasonal,
       subType: 'threshold',
       thresholdAmount: 300, // For every 300 THB...
-      discountPerThreshold: 40, // ...give 40 THB off
+      discountPerThreshold: 40, // give 40 THB off
     ),
   ];
 
